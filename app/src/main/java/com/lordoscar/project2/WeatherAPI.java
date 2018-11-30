@@ -13,9 +13,11 @@ public class WeatherAPI {
     private double temp = 0;
     private int pressure = 0;
     private int humidity = 0;
+    private Context context;
 
     public WeatherAPI(String city, boolean asynctask, Context context){
         this.city=city;
+        this.context = context;
         try {
             String apiJson;
             if(asynctask) {
@@ -36,25 +38,11 @@ public class WeatherAPI {
         JSONObject weatherObject = (JSONObject) jsonObject.get("main");
 
         temp = Double.parseDouble(weatherObject.get("temp").toString()) - 273.15;
-        pressure = Integer.parseInt(weatherObject.get("pressure").toString());
         humidity = Integer.parseInt(weatherObject.get("humidity").toString());
+        pressure = Integer.parseInt(weatherObject.get("pressure").toString());
+
+        ((MainActivity) context).updateApiText(temp, humidity, pressure);
 
         Log.d("WEATHER","TEMP:" + temp + ", PRESSURE:" + pressure + ", HUMIDITY: " + humidity);
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public double getTemp() {
-        return temp;
-    }
-
-    public int getPressure() {
-        return pressure;
-    }
-
-    public int getHumidity() {
-        return humidity;
     }
 }

@@ -108,14 +108,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="COMPARE WITH API"
-                android:id="@+id/compare"/>
+                android:id="@+id/compareButton"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="16dp"
-                android:text="API fetched via Volley"
+                android:text="No API data fetched yet"
                 android:id="@+id/taskText"/>
 
             <TextView
