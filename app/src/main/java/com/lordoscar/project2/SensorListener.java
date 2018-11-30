@@ -6,6 +6,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.Date;
 
 public class SensorListener implements SensorEventListener {
 
@@ -26,13 +29,20 @@ public class SensorListener implements SensorEventListener {
             tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
             sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+        else{
+            ((MainActivity) context).noTemp();
+        }
         if(sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY) != null){
             humiditySensor = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
             sensorManager.registerListener(this, humiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }else{
+            ((MainActivity) context).noHumidity();
         }
         if(sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE) != null){
             pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
             sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }else{
+            ((MainActivity) context).noPressure();
         }
     }
 
@@ -40,16 +50,16 @@ public class SensorListener implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    public void updateTemp(Integer temp){
-        ((MainActivity) context).updateTemp(temp);
+    public void updateTemp(Integer temp, Date date){
+        ((MainActivity) context).updateTemp(temp, date);
     }
 
-    public void updateHumidity(Integer humidity){
-        ((MainActivity) context).updateHumidity(humidity);
+    public void updateHumidity(Integer humidity, Date date){
+        ((MainActivity) context).updateHumidity(humidity, date);
     }
 
-    public void updatePressure(Integer pressure){
-        ((MainActivity) context).updatePressure(pressure);
+    public void updatePressure(Integer pressure, Date date){
+        ((MainActivity) context).updatePressure(pressure, date);
     }
 
     @Override
@@ -58,15 +68,22 @@ public class SensorListener implements SensorEventListener {
 
         switch (sensor.getType()){
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
-                updateTemp(Math.round(event.values[0]));
+                updateTemp(Math.round(event.values[0]), getTime(event.timestamp));
                 break;
             case Sensor.TYPE_RELATIVE_HUMIDITY:
-                updateHumidity(Math.round(event.values[0]));
+                updateHumidity(Math.round(event.values[0]), getTime(event.timestamp));
                 break;
             case Sensor.TYPE_PRESSURE:
-                updatePressure(Math.round(event.values[0]));
+                updatePressure(Math.round(event.values[0]), getTime(event.timestamp));
                 break;
         }
+    }
+
+    private Date getTime(long timestamp){
+        long timeInMillis = (new Date()).getTime()
+                + (timestamp - System.nanoTime()) / 1000000L;
+
+        return new Date(timeInMillis);
     }
 
     @Override

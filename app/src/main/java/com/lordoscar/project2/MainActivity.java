@@ -8,8 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,50 +38,82 @@ public class MainActivity extends AppCompatActivity {
     private int sensorTemp = 0;
     private int sensorHumidity = 0;
     private int sensorPressure = 0;
+    private static DecimalFormat df = new DecimalFormat(".##");
 
-    public void updateTemp(Integer temperature){
+    public void updateTemp(Integer temperature, Date date){
         sensorTemp = temperature;
         TextView sensorTempText = findViewById(R.id.sensorTempText);
         sensorTempText.setText(temperature + " °C");
+        updateSensorDate(date);
     }
 
-    public void updateHumidity(Integer humidity){
+    public void updateHumidity(Integer humidity, Date date){
         sensorHumidity = humidity;
         TextView sensorHumidityText = findViewById(R.id.sensorHumidityText);
         sensorHumidityText.setText(humidity + "%");
+        updateSensorDate(date);
     }
 
-    public void updatePressure(Integer pressure){
+    public void updatePressure(Integer pressure, Date date){
         sensorPressure = pressure;
         TextView sensorPressureText = findViewById(R.id.sensorPressureText);
         sensorPressureText.setText(pressure + " hPa");
+        updateSensorDate(date);
     }
 
-    public void updateApiText(Double temperature, Integer humidity, Integer pressure){
+    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+    private void updateSensorDate(Date date){
+        TextView sensorUpdateText = findViewById(R.id.sensorUpdateText);
+        sensorUpdateText.setText("Last updated " + dateFormat.format(date));
+    }
+
+    public void updateApiText(Double temperature, Integer humidity, Integer pressure, String weather){
         TextView apiTempText = findViewById(R.id.apiTempText);
         TextView apiHumidityText = findViewById(R.id.apiHumidityText);
         TextView apiPressureText = findViewById(R.id.apiPressureText);
         TextView estimatedAltitudeText = findViewById(R.id.estimatedAltitudeText);
+        TextView weatherText = findViewById(R.id.weatherText);
 
-        apiTempText.setText(temperature + "°C (Difference: " + (temperature - sensorTemp) + "°C)");
+        apiTempText.setText(df.format(temperature) + "°C (Difference: " + df.format((temperature - sensorTemp)) + "°C)");
         apiHumidityText.setText(humidity + "% (Difference: " + (humidity - sensorHumidity) + "%)");
         apiPressureText.setText(pressure + " hPa (Difference: " + (pressure - sensorPressure) + " hPa)");
+        weatherText.setText(weather);
 
         float altitude = SensorManager.getAltitude(1014, pressure);
         estimatedAltitudeText.setText(Math.round(altitude) + " meters above sea level");
 
+        TextView apiUpdateText = findViewById(R.id.apiUpdateText);
+        apiUpdateText.setText("Last updated " + dateFormat.format(new Date()));
+    }
+
+    public void noTemp(){
+        TextView sensorTempText = findViewById(R.id.sensorTempText);
+        sensorTempText.setText("No sensor available.");
+    }
+
+    public void noHumidity(){
+        TextView sensorHumidityText = findViewById(R.id.sensorHumidityText);
+        sensorHumidityText.setText("No sensor available.");
+    }
+
+    public void noPressure(){
+        TextView sensorPressureText = findViewById(R.id.sensorPressureText);
+        sensorPressureText.setText("No sensor available.");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         sensorListener.unregisterListeners();
+        Toast.makeText(this, "Unregistered listeners.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         sensorListener.registerListeners();
+        Toast.makeText(this, "Registered listeners.", Toast.LENGTH_SHORT).show();
     }
 
     class ButtonListener implements View.OnClickListener{

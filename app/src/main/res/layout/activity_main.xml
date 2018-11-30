@@ -18,6 +18,20 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Malmö, Sweden"
+                android:textColor="@android:color/black"
+                android:textSize="24dp" android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Cloudy, with a chance of meatballs."
+                android:id="@+id/weatherText"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="TEMPERATURE"/>
 
@@ -38,7 +52,7 @@
                      android:textStyle="bold"
                      android:textColor="@android:color/black"
                      android:textSize="20dp"
-                     android:text="68 C"
+                     android:text="-"
                      android:id="@+id/sensorTempText"/>
 
              </LinearLayout>
@@ -65,7 +79,7 @@
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
-                    android:text="80%"
+                    android:text="-"
                     android:id="@+id/sensorHumidityText"/>
 
             </LinearLayout>
@@ -92,10 +106,17 @@
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
-                    android:text="1080 hPa"
+                    android:text="-"
                     android:id="@+id/sensorPressureText"/>
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="last updated -"
+                android:id="@+id/sensorUpdateText"/>
 
             <Switch
                 android:layout_marginTop="10dp"
@@ -124,56 +145,116 @@
                 android:layout_marginTop="10dp"
                 android:text="TEMPERATURE"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="20dp"
-                android:text="-"
-                android:id="@+id/apiTempText"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/temp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:text="-"
+                    android:id="@+id/apiTempText"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="HUMIDITY"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="20dp"
-                android:text="-"
-                android:id="@+id/apiHumidityText"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/humidity"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:text="-"
+                    android:id="@+id/apiHumidityText"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PRESSURE"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="20dp"
-                android:text="-"
-                android:id="@+id/apiPressureText"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/pressure"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:text="-"
+                    android:id="@+id/apiPressureText"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ESTIMATED ALTITUDE"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/altitude"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="-"
+                    android:id="@+id/estimatedAltitudeText"/>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textSize="20dp"
-                android:text="-"
-                android:id="@+id/estimatedAltitudeText"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
+                android:text="last updated -"
+                android:id="@+id/apiUpdateText"/>
 
         </LinearLayout>
 
